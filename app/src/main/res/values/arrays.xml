@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="greetings">
+        <item>Nice to meet you</item>
+        <item>आपसे मिलकर अच्छा लगा</item>
+        <item>তোমার সাথে দেখা করে ভালো লাগলো</item>
+        <item>તમને મળીને આનંદ થયો</item>
+        <item>तुला भेटून आनंद झाला</item>
+        <item>ਤੁਹਾਨੂੰ ਮਿਲਕੇ ਅੱਛਾ ਲਗਿਆ</item>
+    </string-array>
+</resources>
