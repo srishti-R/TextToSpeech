@@ -1,19 +1,23 @@
 package com.example.texttospeech
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
+
 class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var tts: TextToSpeech
-    var textToSpeak: String = ""
-    var pos = 0
+    private var textToSpeak: String = ""
+    private var pos = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -89,12 +93,26 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.tts_settings) {
+            //Open Android Text-To-Speech Settings
+            startActivity(
+                Intent().setAction("com.android.settings.TTS_SETTINGS")
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            )
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun onDestroy() {
         // Shutdown TTS
-        if (tts != null) {
-            tts.stop()
-            tts.shutdown()
-        }
+        tts.stop()
+        tts.shutdown()
         super.onDestroy()
     }
 }
