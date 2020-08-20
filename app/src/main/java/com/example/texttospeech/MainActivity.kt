@@ -18,6 +18,9 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         tts = TextToSpeech(this, this)
+        for (engines in tts.engines) {
+            Log.d("Engine Info ", engines.toString())
+        }
         for (locale in Locale.getAvailableLocales()) {
             Log.d(
                 "LOCALES",
@@ -38,16 +41,29 @@ class MainActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 textToSpeak = resources.getStringArray(R.array.greetings)[pos]
                 val result = when (pos) {
-                    1 -> tts.setLanguage(Locale("hin", "IND"))
-                    2 -> tts.setLanguage(Locale("bn", "IND"))
-                    3 -> tts.setLanguage(Locale("gu", "IND"))
-                    4 -> tts.setLanguage(Locale("mr", "IND"))
-                    5 -> tts.setLanguage(Locale("pa", "IND"))
-                    else -> tts.setLanguage(Locale.US)
+                    1 -> tts.setLanguage(Locale("hin", "IND")) //hindi
+                    2 -> tts.setLanguage(Locale("bn", "IND")) //bengali
+                    3 -> tts.setLanguage(Locale("gu", "IND")) //gujrati
+                    4 -> tts.setLanguage(Locale("mr", "IND")) //marathi
+                    5 -> tts.setLanguage(Locale("pa", "IND")) //punjabi
+                    6 -> tts.setLanguage(Locale("kn", "IND")) //kannada
+                    7 -> tts.setLanguage(Locale("ta", "IND")) //tamil
+                    8 -> tts.setLanguage(Locale("te", "IND")) //telugu
+                    9 -> tts.setLanguage(Locale("or", "IND")) //odia
+                    10 -> tts.setLanguage(Locale("sd", "IND")) //sindhi
+                    11 -> tts.setLanguage(Locale("ml", "IND")) //malyalam
+                    12 -> tts.setLanguage(Locale("ne", "IND")) //nepali
+                    13 -> tts.setLanguage(Locale("ur", "IND")) //urdu
+                    14 -> tts.setLanguage(Locale.CHINESE) //chinese simplified
+                    else -> tts.setLanguage(Locale.US) //english
                 }
-                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    Log.e("TTS", "The Language specified is not supported!")
+                if (result == TextToSpeech.LANG_MISSING_DATA) {
+                    Log.e("TTS", "The Language specified is missing!")
                 }
+                if (result == TextToSpeech.LANG_NOT_SUPPORTED) Log.e(
+                    "TTS",
+                    "language not supported"
+                )
                 tts.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, "")
             }
         }
